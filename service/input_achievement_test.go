@@ -14,7 +14,7 @@ import (
 	"local.packages/models"
 )
 
-func TestAddOutput(t *testing.T) {
+func TestAddInput(t *testing.T) {
 	// DB接続
 	db, err := sql.Open("mysql", "moizumi:base0210@tcp(localhost:3306)/ambitious_test?parseTime=true")
 	if err != nil {
@@ -31,14 +31,14 @@ func TestAddOutput(t *testing.T) {
 	user := &models.User{Email: "tedt@fwdse.com"}
 	user.Insert(ctx, tx, boil.Infer())
 
-	oa := &models.OutputAchievement{
+	oa := &models.InputAchievement{
 		UserID:       user.UserID,
 		Summary:      null.NewString("Summary1", true),
 		ReferenceURL: null.NewString("http://test1.com", true),
-		OutputTime:   null.NewString("11:00", true),
+		InputTime:    null.NewString("11:00", true),
 	}
 
-	outputService := &OutputService{ctx, tx}
+	inputService := &InputService{ctx, tx}
 
 	c1 := &models.MCategory{CategoryID: 1, Name: "test1"}
 	c2 := &models.MCategory{CategoryID: 2, Name: "test2"}
@@ -47,13 +47,13 @@ func TestAddOutput(t *testing.T) {
 	c2.Insert(ctx, tx, boil.Infer())
 	c3.Insert(ctx, tx, boil.Infer())
 
-	err2 := outputService.AddOutput(oa, []string{"1", "2", "3"})
+	err2 := inputService.AddInput(oa, []string{"1", "2", "3"})
 
 	if err2 != nil {
 		t.Error(err2)
 	}
 
-	got, err3 := outputService.FindByUser(user.UserID)
+	got, err3 := inputService.FindByUser(user.UserID)
 
 	if err3 != nil {
 		t.Error(err3)

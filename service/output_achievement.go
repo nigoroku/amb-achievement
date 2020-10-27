@@ -44,7 +44,7 @@ func (ou *OutputService) FindCategoriesBy(outputAchievementId int) (models.MCate
 	return categories, err
 }
 
-func (o *OutputService) Create(output models.OutputAchievement, categoryIds []string) error {
+func (o *OutputService) AddOutput(output *models.OutputAchievement, categoryIds []string) error {
 	now := time.Now()
 
 	var oa models.OutputAchievement

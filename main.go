@@ -6,6 +6,7 @@ import (
 	// "github.com/kzpolicy/user/controller"
 	// "github.com/kzpolicy/user/middleware"
 	"local.packages/controller"
+	"local.packages/db"
 	"local.packages/middleware"
 
 	"github.com/gin-gonic/gin"
@@ -25,6 +26,9 @@ func main() {
 	config := cors.DefaultConfig()
 	config.AllowOrigins = []string{"http://localhost:3000"}
 	r.Use(cors.New(config))
+
+	// DB接続
+	db.Init()
 
 	// ルーティング
 	aRoute := r.Group("/api/v1")

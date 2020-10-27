@@ -9,7 +9,7 @@ require (
 	github.com/spf13/cast v1.3.1 // indirect
 	github.com/stretchr/testify v1.2.2
 	github.com/volatiletech/inflect v0.0.1 // indirect
-	github.com/volatiletech/null v8.0.0+incompatible // indirect
+	github.com/volatiletech/null v8.0.0+incompatible
 	github.com/volatiletech/sqlboiler v3.7.1+incompatible
 	golang.org/x/crypto v0.0.0-20200820211705-5c72a883971a
 	local.packages/models v0.0.0-00010101000000-000000000000

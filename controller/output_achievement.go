@@ -81,7 +81,7 @@ func AddOrEditOutput(c *gin.Context) {
 	switch {
 	case err == sql.ErrNoRows:
 		// まだ本日のoutputが登録されていない場合
-		err2 = outputService.Create(outputForm.Achievement, outputForm.CategoryIds)
+		err2 = outputService.AddOutput(&outputForm.Achievement, outputForm.CategoryIds)
 	case err != nil:
 		fmt.Println(err)
 		c.JSON(http.StatusBadRequest, gin.H{

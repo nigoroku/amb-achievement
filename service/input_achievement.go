@@ -44,7 +44,7 @@ func (in *InputService) FindCategoriesBy(inputAchievementId int) (models.MCatego
 	return categories, err
 }
 
-func (in *InputService) Create(input models.InputAchievement, categoryIds []string) error {
+func (in *InputService) AddInput(input *models.InputAchievement, categoryIds []string) error {
 	now := time.Now()
 
 	var ia models.InputAchievement
