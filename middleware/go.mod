@@ -1,4 +1,4 @@
-module github.com/kzpolicy/user/middleware
+module github.com/nigoroku/amb-achievement/middleware
 
 go 1.14
 

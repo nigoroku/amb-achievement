@@ -155,11 +155,6 @@ github.com/kr/logfmt v0.0.0-20140226030751-b84e30acd515/go.mod h1:+0opPa2QZZtGFB
 github.com/kr/pretty v0.1.0/go.mod h1:dAy3ld7l9f0ibDNOQOHHMYYIIbhfbHSm3C4ZsoJORNo=
 github.com/kr/pty v1.1.1/go.mod h1:pFQYn66WHrOpPYNljwOMqo10TkYh1fy3cYio2l3bCsQ=
 github.com/kr/text v0.1.0/go.mod h1:4Jbv+DJW3UT/LiOwJeYQe1efqtUx/iVham/4vfdArNI=
-github.com/kzpolicy/amb-todo v0.0.0-20200802145439-572500e27288 h1:qYaWQSNu+3I0G0iDAqrSqHI0FJsTCJCkGXnBSJrFSjE=
-github.com/kzpolicy/amb-todo/models v0.0.0-20200802145439-572500e27288 h1:ZuH8OUU1C/grJ9TM4gv3AD8xkdN7IQRrgL+rM9w7lGc=
-github.com/kzpolicy/amb-todo/models v0.0.0-20200802145439-572500e27288/go.mod h1:wNEmzwBA9OoaQRbxh3TEjjcmDZ6dFuzCNs4Jzo7bcMY=
-github.com/kzpolicy/user/middleware v0.0.0-20200817083419-b92d52a533d9 h1:KPJeehpt6ukS/uPIK0aZueHT8LpkA8+GP4px0HiLGsw=
-github.com/kzpolicy/user/models v0.0.0-20200802033857-9e153e414a56/go.mod h1:wNEmzwBA9OoaQRbxh3TEjjcmDZ6dFuzCNs4Jzo7bcMY=
 github.com/labstack/echo v1.4.4 h1:1bEiBNeGSUKxcPDGfZ/7IgdhJJZx8wV/pICJh4W2NJI=
 github.com/labstack/echo v3.3.10+incompatible h1:pGRcYk231ExFAyoAjAfD85kQzRJCRI8bbnE7CX5OEgg=
 github.com/labstack/echo v3.3.10+incompatible/go.mod h1:0INS7j/VjnFxD4E2wkz67b8cVwCLbBmJyDaka6Cmk1s=

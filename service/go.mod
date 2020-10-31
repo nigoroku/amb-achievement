@@ -1,4 +1,4 @@
-module github.com/kzpolicy/user/service
+module github.com/nigoroku/amb-achievement/service
 
 go 1.14
 

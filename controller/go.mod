@@ -1,4 +1,4 @@
-module github.com/kzpolicy/user/controller
+module github.com/nigoroku/amb-achievement/controller
 
 go 1.14
 

@@ -1,4 +1,4 @@
-module github.com/kzpolicy/user/models
+module github.com/nigoroku/amb-achievement/models
 
 go 1.14
 
