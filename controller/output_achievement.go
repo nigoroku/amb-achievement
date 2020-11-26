@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strconv"
 
-	"local.packages/models"
+	"local.packages/generated"
 	"local.packages/service"
 
 	"net/http"
@@ -14,8 +14,8 @@ import (
 )
 
 type OutputForm struct {
-	CategoryIds []string                 `json:"category_ids"`
-	Achievement models.OutputAchievement `json:"achievement"`
+	CategoryIds []string                    `json:"category_ids"`
+	Achievement generated.OutputAchievement `json:"achievement"`
 }
 
 func FindOutputByUser(c *gin.Context) {

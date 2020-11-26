@@ -1,6 +1,8 @@
 package main
 
 import (
+	"os"
+
 	"github.com/gin-contrib/cors"
 
 	// "github.com/kzpolicy/user/controller"
@@ -41,6 +43,8 @@ func main() {
 
 			v1.GET("/output", controller.FindOutputByUser)
 			v1.POST("/output/register", controller.AddOrEditOutput)
+
+			v1.GET("/aggregate", controller.FindAggregateResult)
 		}
 	}
 
@@ -50,6 +54,18 @@ func main() {
 		})
 	})
 
-	// TODO:環境変数に設定する
-	r.Run(":8083")
+	// 起動ポートを環境変数から取得
+	port := os.Getenv("SERVER_PORT")
+	if port == "" {
+		port = "8083"
+	}
+
+	// プロトコルを環境変数から取得
+	proto := os.Getenv("PROTO")
+
+	if proto == "https" {
+		r.RunTLS(":"+port, "./tls/cert.pem", "./tls/key.pem")
+	} else {
+		r.Run(":" + port)
+	}
 }

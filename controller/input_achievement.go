@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strconv"
 
-	"local.packages/models"
+	"local.packages/generated"
 	"local.packages/service"
 
 	"net/http"
@@ -14,8 +14,8 @@ import (
 )
 
 type InputForm struct {
-	CategoryIds []string                `json:"category_ids"`
-	Achievement models.InputAchievement `json:"achievement"`
+	CategoryIds []string                   `json:"category_ids"`
+	Achievement generated.InputAchievement `json:"achievement"`
 }
 
 func FindInputByUser(c *gin.Context) {

@@ -11,7 +11,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/volatiletech/null"
 	"github.com/volatiletech/sqlboiler/boil"
-	"local.packages/models"
+	"local.packages/generated"
 )
 
 func TestAddOutput(t *testing.T) {
@@ -28,10 +28,10 @@ func TestAddOutput(t *testing.T) {
 	tx, _ := boil.BeginTx(ctx, nil)
 	defer func() { _ = tx.Rollback() }()
 
-	user := &models.User{Email: "tedt@fwdse.com"}
+	user := &generated.User{Email: "tedt@fwdse.com"}
 	user.Insert(ctx, tx, boil.Infer())
 
-	oa := &models.OutputAchievement{
+	oa := &generated.OutputAchievement{
 		UserID:       user.UserID,
 		Summary:      null.NewString("Summary1", true),
 		ReferenceURL: null.NewString("http://test1.com", true),
@@ -40,9 +40,9 @@ func TestAddOutput(t *testing.T) {
 
 	outputService := &OutputService{ctx, tx}
 
-	c1 := &models.MCategory{CategoryID: 1, Name: "test1"}
-	c2 := &models.MCategory{CategoryID: 2, Name: "test2"}
-	c3 := &models.MCategory{CategoryID: 3, Name: "test3"}
+	c1 := &generated.MCategory{CategoryID: 1, Name: "test1"}
+	c2 := &generated.MCategory{CategoryID: 2, Name: "test2"}
+	c3 := &generated.MCategory{CategoryID: 3, Name: "test3"}
 	c1.Insert(ctx, tx, boil.Infer())
 	c2.Insert(ctx, tx, boil.Infer())
 	c3.Insert(ctx, tx, boil.Infer())

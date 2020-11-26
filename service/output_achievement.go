@@ -5,10 +5,10 @@ import (
 	"strconv"
 	"time"
 
-	// "github.com/kzpolicy/user/models"
+	// "github.com/kzpolicy/user/generated"
 	"github.com/volatiletech/sqlboiler/boil"
 	"github.com/volatiletech/sqlboiler/queries/qm"
-	"local.packages/models"
+	"local.packages/generated"
 
 	"context"
 )
@@ -26,15 +26,15 @@ func NewOutputService() *OutputService {
 	return &OutputService{ctx, db}
 }
 
-func (o *OutputService) FindByUser(userId int) (*models.OutputAchievement, error) {
+func (o *OutputService) FindByUser(userId int) (*generated.OutputAchievement, error) {
 	// データ取得
-	return models.OutputAchievements(qm.Where("user_id=? and created_at > DATE_SUB(NOW(), INTERVAL 1 DAY)", userId)).One(o.ctx, o.db)
+	return generated.OutputAchievements(qm.Where("user_id=? and created_at > DATE_SUB(NOW(), INTERVAL 1 DAY)", userId)).One(o.ctx, o.db)
 }
 
-func (ou *OutputService) FindCategoriesBy(outputAchievementId int) (models.MCategorySlice, error) {
+func (ou *OutputService) FindCategoriesBy(outputAchievementId int) (generated.MCategorySlice, error) {
 	// データ取得
-	var categories models.MCategorySlice
-	err := models.NewQuery(
+	var categories generated.MCategorySlice
+	err := generated.NewQuery(
 		qm.Select("c.*"),
 		qm.From("output_achievement_tags as oat"),
 		qm.InnerJoin("m_categories c ON oat.category_id = c.category_id"),
@@ -44,10 +44,10 @@ func (ou *OutputService) FindCategoriesBy(outputAchievementId int) (models.MCate
 	return categories, err
 }
 
-func (o *OutputService) AddOutput(output *models.OutputAchievement, categoryIds []string) error {
+func (o *OutputService) AddOutput(output *generated.OutputAchievement, categoryIds []string) error {
 	now := time.Now()
 
-	var oa models.OutputAchievement
+	var oa generated.OutputAchievement
 	oa.ReferenceURL = output.ReferenceURL
 	oa.Summary = output.Summary
 	oa.OutputTime = output.OutputTime
@@ -58,7 +58,7 @@ func (o *OutputService) AddOutput(output *models.OutputAchievement, categoryIds 
 
 	for _, categoryID := range categoryIds {
 
-		var category models.OutputAchievementTag
+		var category generated.OutputAchievementTag
 		c, _ := strconv.Atoi(categoryID)
 		category.CategoryID = c
 		category.OutputAchievementID = oa.OutputAchievementID
@@ -75,21 +75,21 @@ func (o *OutputService) AddOutput(output *models.OutputAchievement, categoryIds 
 	return err
 }
 
-func (o *OutputService) Update(output models.OutputAchievement, categoryIds []string, id int) error {
+func (o *OutputService) Update(output generated.OutputAchievement, categoryIds []string, id int) error {
 	now := time.Now()
 
 	updCols := map[string]interface{}{
-		models.OutputAchievementColumns.ReferenceURL: output.ReferenceURL,
-		models.OutputAchievementColumns.Summary:      output.Summary,
-		models.OutputAchievementColumns.OutputTime:   output.OutputTime,
-		models.OutputAchievementColumns.UserID:       output.UserID,
-		models.OutputAchievementColumns.ModifiedBy:   output.UserID,
-		models.OutputAchievementColumns.ModifiedAt:   now,
+		generated.OutputAchievementColumns.ReferenceURL: output.ReferenceURL,
+		generated.OutputAchievementColumns.Summary:      output.Summary,
+		generated.OutputAchievementColumns.OutputTime:   output.OutputTime,
+		generated.OutputAchievementColumns.UserID:       output.UserID,
+		generated.OutputAchievementColumns.ModifiedBy:   output.UserID,
+		generated.OutputAchievementColumns.ModifiedAt:   now,
 	}
 
-	query := qm.WhereIn(models.OutputAchievementColumns.OutputAchievementID+" = ?", id)
+	query := qm.WhereIn(generated.OutputAchievementColumns.OutputAchievementID+" = ?", id)
 
-	_, err := models.OutputAchievements(query).UpdateAll(o.ctx, o.db, updCols)
+	_, err := generated.OutputAchievements(query).UpdateAll(o.ctx, o.db, updCols)
 
 	if err != nil {
 		fmt.Println(err)
@@ -97,7 +97,7 @@ func (o *OutputService) Update(output models.OutputAchievement, categoryIds []st
 	}
 
 	// categorys は、delete & insert
-	_, err2 := models.OutputAchievementTags(qm.Where("output_achievement_id=?", id)).DeleteAll(o.ctx, o.db)
+	_, err2 := generated.OutputAchievementTags(qm.Where("output_achievement_id=?", id)).DeleteAll(o.ctx, o.db)
 
 	if err2 != nil {
 		fmt.Println(err2)
@@ -106,7 +106,7 @@ func (o *OutputService) Update(output models.OutputAchievement, categoryIds []st
 
 	for _, categoryID := range categoryIds {
 
-		var category models.OutputAchievementTag
+		var category generated.OutputAchievementTag
 		c, _ := strconv.Atoi(categoryID)
 		category.CategoryID = c
 		category.OutputAchievementID = id

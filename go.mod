@@ -14,6 +14,7 @@ require (
 	github.com/gin-gonic/gin v1.6.3
 	github.com/go-sql-driver/mysql v1.5.0
 	github.com/gofrs/uuid v3.3.0+incompatible // indirect
+	github.com/kelseyhightower/envconfig v1.4.0 // indirect
 	github.com/labstack/echo v3.3.10+incompatible // indirect
 	github.com/labstack/gommon v0.3.0 // indirect
 	github.com/pelletier/go-toml v1.8.0 // indirect
@@ -33,10 +34,13 @@ require (
 	local.packages/db v0.0.0-00010101000000-000000000000
 	local.packages/middleware v0.0.0-00010101000000-000000000000
 	local.packages/models v0.0.0-00010101000000-000000000000
+	local.packages/generated v0.0.0-00010101000000-000000000000
 	local.packages/service v0.0.0-00010101000000-000000000000 // indirect
 )
 
 replace local.packages/models => ./models
+
+replace local.packages/generated => ./models/generated
 
 replace local.packages/middleware => ./middleware
 

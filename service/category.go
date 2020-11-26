@@ -4,7 +4,7 @@ import (
 
 	// "github.com/kzpolicy/user/models"
 	"github.com/volatiletech/sqlboiler/boil"
-	"local.packages/models"
+	"local.packages/generated"
 
 	"context"
 )
@@ -22,7 +22,7 @@ func NewCategoryService() *CategoryService {
 	return &CategoryService{ctx, db}
 }
 
-func (c *CategoryService) FindAll() (models.MCategorySlice, error) {
+func (c *CategoryService) FindAll() (generated.MCategorySlice, error) {
 	// データ取得
-	return models.MCategories().All(c.ctx, c.db)
+	return generated.MCategories().All(c.ctx, c.db)
 }
