@@ -26,7 +26,7 @@ func main() {
 
 	// CORS 対応
 	config := cors.DefaultConfig()
-	config.AllowOrigins = []string{"http://localhost:3000"}
+	config.AllowOrigins = []string{"*"}
 	r.Use(cors.New(config))
 
 	// DB接続
@@ -44,7 +44,11 @@ func main() {
 			v1.GET("/output", controller.FindOutputByUser)
 			v1.POST("/output/register", controller.AddOrEditOutput)
 
+			// 学習時間集計値取得
 			v1.GET("/aggregate", controller.FindAggregateResult)
+
+			// 集計単位ごとの学習時間推移
+			v1.GET("/transition/aggregate", controller.FindLearningTimeTransition)
 		}
 	}
 
@@ -60,12 +64,5 @@ func main() {
 		port = "8083"
 	}
 
-	// プロトコルを環境変数から取得
-	proto := os.Getenv("PROTO")
-
-	if proto == "https" {
-		r.RunTLS(":"+port, "./tls/cert.pem", "./tls/key.pem")
-	} else {
-		r.Run(":" + port)
-	}
+	r.Run(":" + port)
 }

@@ -1,7 +1,15 @@
 package models
 
-// AchievementPercentag OutputとInputの総学習時間の割合を格納する
+// CategoryDistribution カテゴリごとの学習時間を格納する
 type CategoryDistribution struct {
-	CategoryName string `json:"category_name"`
-	TotalTime    int    `json:"total_time"`
+	CategoryName string `boil:"category_name" json:"category_name"`
+	TotalTime    int    `boil:"total_time" json:"total_time"`
+}
+
+// NewCategoryDistribution コンストラクタ
+func NewCategoryDistribution(categoryName string, totalTime int) *CategoryDistribution {
+	c := new(CategoryDistribution)
+	c.CategoryName = categoryName
+	c.TotalTime = totalTime
+	return c
 }

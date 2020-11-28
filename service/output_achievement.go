@@ -96,6 +96,10 @@ func (o *OutputService) Update(output generated.OutputAchievement, categoryIds [
 		return err
 	}
 
+	if len(categoryIds) == 0 {
+		return nil
+	}
+
 	// categorys は、delete & insert
 	_, err2 := generated.OutputAchievementTags(qm.Where("output_achievement_id=?", id)).DeleteAll(o.ctx, o.db)
 

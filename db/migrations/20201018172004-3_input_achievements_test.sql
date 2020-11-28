@@ -5,7 +5,7 @@ CREATE TABLE `input_achievements` (
   `user_id` int NOT NULL,
   `reference_url` varchar(300) DEFAULT NULL,
   `summary` varchar(1000) DEFAULT NULL,
-  `input_time` varchar(30) DEFAULT NULL,
+  `input_time` int DEFAULT NULL,
   `created_by` int NOT NULL,
   `created_at` timestamp NOT NULL,
   `modified_by` int DEFAULT NULL,

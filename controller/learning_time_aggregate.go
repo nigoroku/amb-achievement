@@ -1,73 +1,77 @@
 package controller
 
 import (
+	"database/sql"
+	"fmt"
 	"net/http"
 	"strconv"
 
 	"local.packages/service"
 	// "local.packages/generated"
-	"local.packages/models"
 
 	"github.com/gin-gonic/gin"
 )
 
-type AggregateResultForm struct {
-	// 総学習時間
-	TotalLearningTime int `json:"total_learning_time"`
-	// Output.Input割合
-	AchievementPercentag models.AchievementPercentag `json:achievement_percentag`
-	// 学習カテゴリ分布
-	CategoryDistribution []models.CategoryDistribution `json:category_distribution`
-}
-
+// FindAggregateResult 学習時間の集計結果を取得する
 func FindAggregateResult(c *gin.Context) {
 
 	userID, _ := strconv.Atoi(c.Query("user_id"))
 
 	learningService := service.NewLearningTimeAggregateService()
 	// 総学習時間を算出する
-	time, _ := learningService.CalcTotalLearningTime(userID)
+	aggregateResults, err := learningService.AggregateLearningTime(userID)
 
-	// switch {
-	// case err == sql.ErrNoRows:
-	// 	c.JSON(http.StatusOK, gin.H{
-	// 		"message":    "OK",
-	// 		"input":      in,
-	// 		"categories": "",
-	// 	})
-	// 	return
-	// case err != nil:
-	// 	fmt.Println(err)
-	// 	c.JSON(http.StatusBadRequest, gin.H{
-	// 		"message": "ng",
-	// 		"err":     err,
-	// 	})
-	// 	return
-	// default:
-	// }
-
-	// categories, err2 := inputService.FindCategoriesBy(in.InputAchievementID)
-
-	// switch {
-	// case err2 == sql.ErrNoRows:
-	// 	c.JSON(http.StatusOK, gin.H{
-	// 		"message":    "OK",
-	// 		"input":      in,
-	// 		"categories": "",
-	// 	})
-	// 	return
-	// case err2 != nil:
-	// 	fmt.Println(err2)
-	// 	c.JSON(http.StatusBadRequest, gin.H{
-	// 		"message": "ng",
-	// 		"err":     err2,
-	// 	})
-	// 	return
-	// default:
-	// }
+	switch {
+	case err == sql.ErrNoRows:
+		c.JSON(http.StatusOK, gin.H{
+			"message":           "OK",
+			"aggregate_results": aggregateResults,
+		})
+		return
+	case err != nil:
+		fmt.Println(err)
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": "ng",
+			"err":     err,
+		})
+		return
+	default:
+	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"message": "OK",
-		"time":    time,
+		"message":           "OK",
+		"aggregate_results": aggregateResults,
+	})
+}
+
+// FindLearningTimeTransition 集計単位ごとの学習時間推移を取得する
+func FindLearningTimeTransition(c *gin.Context) {
+
+	userID, _ := strconv.Atoi(c.Query("user_id"))
+
+	learningService := service.NewLearningTimeAggregateService()
+	// 集計単位ごとの学習時間推移を算出する
+	learningTransition, err := learningService.AggregateLearningTransition(userID)
+
+	switch {
+	case err == sql.ErrNoRows:
+		c.JSON(http.StatusOK, gin.H{
+			"message":             "OK",
+			"learning_transition": learningTransition,
+		})
+		return
+	case err != nil:
+		fmt.Println(err)
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": "ng",
+			"err":     err,
+		})
+		return
+	default:
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"message":             "OK",
+		"learning_transition": learningTransition,
 	})
 }

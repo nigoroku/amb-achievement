@@ -28,7 +28,7 @@ type InputAchievement struct {
 	UserID             int         `boil:"user_id" json:"user_id" toml:"user_id" yaml:"user_id"`
 	ReferenceURL       null.String `boil:"reference_url" json:"reference_url,omitempty" toml:"reference_url" yaml:"reference_url,omitempty"`
 	Summary            null.String `boil:"summary" json:"summary,omitempty" toml:"summary" yaml:"summary,omitempty"`
-	InputTime          null.String `boil:"input_time" json:"input_time,omitempty" toml:"input_time" yaml:"input_time,omitempty"`
+	InputTime          null.Int    `boil:"input_time" json:"input_time,omitempty" toml:"input_time" yaml:"input_time,omitempty"`
 	CreatedBy          int         `boil:"created_by" json:"created_by" toml:"created_by" yaml:"created_by"`
 	CreatedAt          time.Time   `boil:"created_at" json:"created_at" toml:"created_at" yaml:"created_at"`
 	ModifiedBy         null.Int    `boil:"modified_by" json:"modified_by,omitempty" toml:"modified_by" yaml:"modified_by,omitempty"`
@@ -90,7 +90,7 @@ var InputAchievementWhere = struct {
 	UserID             whereHelperint
 	ReferenceURL       whereHelpernull_String
 	Summary            whereHelpernull_String
-	InputTime          whereHelpernull_String
+	InputTime          whereHelpernull_Int
 	CreatedBy          whereHelperint
 	CreatedAt          whereHelpertime_Time
 	ModifiedBy         whereHelpernull_Int
@@ -100,7 +100,7 @@ var InputAchievementWhere = struct {
 	UserID:             whereHelperint{field: "`input_achievements`.`user_id`"},
 	ReferenceURL:       whereHelpernull_String{field: "`input_achievements`.`reference_url`"},
 	Summary:            whereHelpernull_String{field: "`input_achievements`.`summary`"},
-	InputTime:          whereHelpernull_String{field: "`input_achievements`.`input_time`"},
+	InputTime:          whereHelpernull_Int{field: "`input_achievements`.`input_time`"},
 	CreatedBy:          whereHelperint{field: "`input_achievements`.`created_by`"},
 	CreatedAt:          whereHelpertime_Time{field: "`input_achievements`.`created_at`"},
 	ModifiedBy:         whereHelpernull_Int{field: "`input_achievements`.`modified_by`"},

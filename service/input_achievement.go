@@ -95,6 +95,10 @@ func (in *InputService) Update(input generated.InputAchievement, categoryIds []s
 		return err
 	}
 
+	if len(categoryIds) == 0 {
+		return nil
+	}
+
 	// categorys は、delete & insert
 	_, err2 := generated.InputAchievementTags(qm.Where("input_achievement_id=?", id)).DeleteAll(in.ctx, in.db)
 

@@ -31,7 +31,7 @@ type OutputAchievement struct {
 	CreatedAt           time.Time   `boil:"created_at" json:"created_at" toml:"created_at" yaml:"created_at"`
 	ModifiedBy          null.Int    `boil:"modified_by" json:"modified_by,omitempty" toml:"modified_by" yaml:"modified_by,omitempty"`
 	ModifiedAt          null.Time   `boil:"modified_at" json:"modified_at,omitempty" toml:"modified_at" yaml:"modified_at,omitempty"`
-	OutputTime          null.String `boil:"output_time" json:"output_time,omitempty" toml:"output_time" yaml:"output_time,omitempty"`
+	OutputTime          null.Int    `boil:"output_time" json:"output_time,omitempty" toml:"output_time" yaml:"output_time,omitempty"`
 	UserID              int         `boil:"user_id" json:"user_id" toml:"user_id" yaml:"user_id"`
 
 	R *outputAchievementR `boil:"-" json:"-" toml:"-" yaml:"-"`
@@ -70,7 +70,7 @@ var OutputAchievementWhere = struct {
 	CreatedAt           whereHelpertime_Time
 	ModifiedBy          whereHelpernull_Int
 	ModifiedAt          whereHelpernull_Time
-	OutputTime          whereHelpernull_String
+	OutputTime          whereHelpernull_Int
 	UserID              whereHelperint
 }{
 	OutputAchievementID: whereHelperint{field: "`output_achievements`.`output_achievement_id`"},
@@ -80,7 +80,7 @@ var OutputAchievementWhere = struct {
 	CreatedAt:           whereHelpertime_Time{field: "`output_achievements`.`created_at`"},
 	ModifiedBy:          whereHelpernull_Int{field: "`output_achievements`.`modified_by`"},
 	ModifiedAt:          whereHelpernull_Time{field: "`output_achievements`.`modified_at`"},
-	OutputTime:          whereHelpernull_String{field: "`output_achievements`.`output_time`"},
+	OutputTime:          whereHelpernull_Int{field: "`output_achievements`.`output_time`"},
 	UserID:              whereHelperint{field: "`output_achievements`.`user_id`"},
 }
 

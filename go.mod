@@ -36,6 +36,7 @@ require (
 	local.packages/models v0.0.0-00010101000000-000000000000
 	local.packages/generated v0.0.0-00010101000000-000000000000
 	local.packages/service v0.0.0-00010101000000-000000000000 // indirect
+	local.packages/utils v0.0.0-00010101000000-000000000000 // indirect
 )
 
 replace local.packages/models => ./models
@@ -47,5 +48,7 @@ replace local.packages/middleware => ./middleware
 replace local.packages/controller => ./controller
 
 replace local.packages/service => ./service
+
+replace local.packages/utils => ./utils
 
 replace local.packages/db => ./db
