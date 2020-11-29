@@ -75,7 +75,7 @@ func (lt *LearningTimeAggregateService) AggregateLearningTime(userID int) (*mode
 	achievementPercentag := models.NewAchievementPercentag(int(outputPercentag), inputPercentag, outputTime, inputTime)
 
 	// カテゴリごとの学習時間
-	var categoryDistribution []*models.CategoryDistribution
+	categoryDistribution := models.CategoryDistributionSlice{}
 	// inputに含まれていてoutputにも含まれているカテゴリの学種時間を設定
 	for _, ic := range inputTimeCategories {
 		for _, oc := range outputTimeCategories {
@@ -85,7 +85,7 @@ func (lt *LearningTimeAggregateService) AggregateLearningTime(userID int) (*mode
 		}
 		categoryDistribution = append(categoryDistribution, models.NewCategoryDistribution(ic.CategoryName, ic.TotalTime))
 	}
-	// outputにのみ含まれているカテゴリの学種時間を設定
+	// outputにのみ含まれているカテゴリの学習時間を設定
 	for _, oc := range outputTimeCategories {
 		isContain := false
 		for _, ic := range inputTimeCategories {
@@ -98,6 +98,8 @@ func (lt *LearningTimeAggregateService) AggregateLearningTime(userID int) (*mode
 			categoryDistribution = append(categoryDistribution, models.NewCategoryDistribution(oc.CategoryName, oc.TotalTime))
 		}
 	}
+	// 学習時間でソート
+	sort.Sort(categoryDistribution)
 
 	return models.NewAggregateResultForm(totalTime, *achievementPercentag, categoryDistribution), nil
 }

@@ -13,3 +13,18 @@ func NewCategoryDistribution(categoryName string, totalTime int) *CategoryDistri
 	c.TotalTime = totalTime
 	return c
 }
+
+// CategoryDistributionSlice ソート用スライス
+type CategoryDistributionSlice []*CategoryDistribution
+
+func (p CategoryDistributionSlice) Len() int {
+	return len(p)
+}
+
+func (p CategoryDistributionSlice) Swap(i, j int) {
+	p[i], p[j] = p[j], p[i]
+}
+
+func (p CategoryDistributionSlice) Less(i, j int) bool {
+	return p[i].TotalTime > p[j].TotalTime
+}
