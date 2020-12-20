@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/volatiletech/sqlboiler/boil"
+	"github.com/volatiletech/sqlboiler/queries"
 	"github.com/volatiletech/sqlboiler/queries/qm"
 	"local.packages/generated"
 	"local.packages/models"
@@ -205,15 +206,31 @@ func (lt *LearningTimeAggregateService) CalcTotalForOutputCategory(userID int) (
 func (lt *LearningTimeAggregateService) calcLearningTransitionByUnit(userID int, dateFormat string) ([]*models.LearningTransition, error) {
 
 	var learningTransition []*models.LearningTransition
-	err := generated.NewQuery(
-		qm.Select("SUM(ia.input_time + oa.output_time) as time", "DATE_FORMAT(ia.created_at,'"+dateFormat+"') as label"),
-		qm.From("users u"),
-		qm.InnerJoin("input_achievements ia ON u.user_id = ia.user_id"),
-		qm.InnerJoin("output_achievements oa ON u.user_id = oa.user_id"),
-		qm.Where("u.user_id=?", userID),
-		qm.GroupBy("DATE_FORMAT(ia.created_at, '"+dateFormat+"')"),
-		qm.OrderBy("label DESC"),
-	).Bind(lt.ctx, lt.db, &learningTransition)
+	var query = `
+			SELECT
+				SUM(time) as time, label
+			FROM
+				(SELECT
+					SUM(ia.input_time) as time,
+					DATE_FORMAT(ia.created_at, '` + dateFormat + `') as label
+				From users u
+				left outer join input_achievements ia
+					ON u.user_id = ia.user_id
+				Where u.user_id=?
+				Group By label
+				union all
+				SELECT
+					SUM(oa.output_time) as time,
+					DATE_FORMAT(oa.created_at,'` + dateFormat + `') as label
+				From users u
+				left outer join output_achievements oa
+					ON u.user_id = oa.user_id
+				Where u.user_id=?
+				Group By label
+				Order By label DESC) T
+			Group By label`
+
+	err := queries.Raw(query, userID, userID).Bind(lt.ctx, lt.db, &learningTransition)
 
 	return learningTransition, err
 }
