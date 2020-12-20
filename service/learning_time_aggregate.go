@@ -55,13 +55,13 @@ func (lt *LearningTimeAggregateService) AggregateLearningTime(userID int) (*mode
 	}
 
 	// 総学習時間
-	outputTime := 0
-	for _, input := range inputTimeCategories {
-		outputTime += input.TotalTime
-	}
 	inputTime := 0
+	for _, input := range inputTimeCategories {
+		inputTime += input.TotalTime
+	}
+	outputTime := 0
 	for _, output := range outputTimeCategories {
-		inputTime += output.TotalTime
+		outputTime += output.TotalTime
 	}
 	totalTime := outputTime + inputTime
 
@@ -183,7 +183,7 @@ func (lt *LearningTimeAggregateService) CalcTotalForInputCategory(userID int) ([
 	return categoryDistributions, err
 }
 
-// CalcTotalForOutputCategory インプットカテゴリごとの総学習時間を算出する
+// CalcTotalForOutputCategory アウトプットカテゴリごとの総学習時間を算出する
 func (lt *LearningTimeAggregateService) CalcTotalForOutputCategory(userID int) ([]models.CategoryDistribution, error) {
 
 	var categoryDistributions []models.CategoryDistribution
@@ -206,9 +206,10 @@ func (lt *LearningTimeAggregateService) calcLearningTransitionByUnit(userID int,
 
 	var learningTransition []*models.LearningTransition
 	err := generated.NewQuery(
-		qm.Select("SUM(ia.input_time) as time", "DATE_FORMAT(ia.created_at,'"+dateFormat+"') as label"),
+		qm.Select("SUM(ia.input_time + oa.output_time) as time", "DATE_FORMAT(ia.created_at,'"+dateFormat+"') as label"),
 		qm.From("users u"),
 		qm.InnerJoin("input_achievements ia ON u.user_id = ia.user_id"),
+		qm.InnerJoin("output_achievements oa ON u.user_id = oa.user_id"),
 		qm.Where("u.user_id=?", userID),
 		qm.GroupBy("DATE_FORMAT(ia.created_at, '"+dateFormat+"')"),
 		qm.OrderBy("label DESC"),
