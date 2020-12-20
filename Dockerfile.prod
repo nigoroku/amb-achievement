@@ -1,0 +1,17 @@
+FROM golang:1.14.10-alpine3.12 as builder
+
+WORKDIR /go/src/github.com/nigoroku/amb-achievement
+ADD . /go/src/github.com/nigoroku/amb-achievement
+
+ENV GO111MODULE=on
+
+RUN go mod download
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o /go/bin/amb-achievement
+
+FROM alpine:latest
+
+RUN apk update && apk add --no-cache ca-certificates
+COPY --from=builder /go/bin/amb-achievement /go/bin/amb-achievement
+
+ENTRYPOINT ["/go/bin/amb-achievement"]
+EXPOSE 8083

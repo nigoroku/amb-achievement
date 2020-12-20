@@ -1,8 +1,6 @@
 package main
 
 import (
-	"os"
-
 	"github.com/gin-contrib/cors"
 
 	// "github.com/kzpolicy/user/controller"
@@ -58,11 +56,5 @@ func main() {
 		})
 	})
 
-	// 起動ポートを環境変数から取得
-	port := os.Getenv("SERVER_PORT")
-	if port == "" {
-		port = "8083"
-	}
-
-	r.Run(":" + port)
+	r.Run(":8083")
 }
