@@ -3,20 +3,17 @@ services:
   achievement:
     build:
       context: .
+      dockerfile: Dockerfile.prod
+    image: ${ECR_REGISTRY}/${ECR_REPOSITORY}:latest
     volumes:
       - ./:/go/src/github.com/nigoroku/amb-achievement
     ports:
-      - "8083:8083"
+      - "8081:8081"
     environment:
-      - DATABASE_HOST=amb-db
-      - DATABASE_PASSWORD=base0210
-      - DATABASE=ambitious
-      - DATABASE_USERNAME=root
+      DB_URL: ${DB_URL}
+      DB_PORT: ${DB_PORT}
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
     tty: true
     stdin_open: true
-    networks:
-      - amb-network
-
-networks:
-  amb-network:
-    external: true
