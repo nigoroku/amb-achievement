@@ -4,12 +4,12 @@ import "github.com/volatiletech/null"
 
 // LearningTransition 学習時間の推移を格納する
 type LearningTransition struct {
-	Label string   `json:"label"`
-	Time  null.Int `json:"time"`
+	Label null.String `json:"label"`
+	Time  null.Int    `json:"time"`
 }
 
 // NewLearningTransition コンストラクタ
-func NewLearningTransition(label string, time null.Int) *LearningTransition {
+func NewLearningTransition(label null.String, time null.Int) *LearningTransition {
 	l := new(LearningTransition)
 	l.Label = label
 	l.Time = time
@@ -28,5 +28,5 @@ func (p LearningTransitionSlice) Swap(i, j int) {
 }
 
 func (p LearningTransitionSlice) Less(i, j int) bool {
-	return p[i].Label < p[j].Label
+	return p[i].Label.String < p[j].Label.String
 }

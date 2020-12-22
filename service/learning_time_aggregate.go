@@ -128,9 +128,9 @@ func (lt *LearningTimeAggregateService) AggregateLearningTransition(userID int) 
 	// 年ごとの集計
 	years := models.LearningTransitionSlice{}
 	for _, l := range createLabelsByUnit(YearUnit) {
-		ltm := models.NewLearningTransition(l, null.NewInt(0, true))
+		ltm := models.NewLearningTransition(null.NewString(l, true), null.NewInt(0, true))
 		for _, y := range yearLearningTransition {
-			if l == y.Label {
+			if l == y.Label.String {
 				ltm.Time = y.Time
 			}
 		}
@@ -141,9 +141,9 @@ func (lt *LearningTimeAggregateService) AggregateLearningTransition(userID int) 
 	// 月ごとの集計
 	months := models.LearningTransitionSlice{}
 	for _, l := range createLabelsByUnit(MonthUnit) {
-		ltm := models.NewLearningTransition(l, null.NewInt(0, true))
+		ltm := models.NewLearningTransition(null.NewString(l, true), null.NewInt(0, true))
 		for _, m := range monthLearningTransition {
-			if l == m.Label {
+			if l == m.Label.String {
 				ltm.Time = m.Time
 			}
 		}
@@ -154,9 +154,9 @@ func (lt *LearningTimeAggregateService) AggregateLearningTransition(userID int) 
 	// 週ごとの集計
 	days := models.LearningTransitionSlice{}
 	for _, l := range createLabelsByUnit(DaysUnit) {
-		ltm := models.NewLearningTransition(l, null.NewInt(0, true))
+		ltm := models.NewLearningTransition(null.NewString(l, true), null.NewInt(0, true))
 		for _, d := range daysLearningTransition {
-			if l == d.Label {
+			if l == d.Label.String {
 				ltm.Time = d.Time
 			}
 		}
