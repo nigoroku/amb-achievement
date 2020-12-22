@@ -1,13 +1,15 @@
 package models
 
+import "github.com/volatiletech/null"
+
 // LearningTransition 学習時間の推移を格納する
 type LearningTransition struct {
-	Label string `json:"label"`
-	Time  int    `json:"time"`
+	Label string   `json:"label"`
+	Time  null.Int `json:"time"`
 }
 
 // NewLearningTransition コンストラクタ
-func NewLearningTransition(label string, time int) *LearningTransition {
+func NewLearningTransition(label string, time null.Int) *LearningTransition {
 	l := new(LearningTransition)
 	l.Label = label
 	l.Time = time

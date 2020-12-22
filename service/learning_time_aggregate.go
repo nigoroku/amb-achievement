@@ -8,6 +8,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/volatiletech/null"
 	"github.com/volatiletech/sqlboiler/boil"
 	"github.com/volatiletech/sqlboiler/queries"
 	"github.com/volatiletech/sqlboiler/queries/qm"
@@ -127,7 +128,7 @@ func (lt *LearningTimeAggregateService) AggregateLearningTransition(userID int) 
 	// 年ごとの集計
 	years := models.LearningTransitionSlice{}
 	for _, l := range createLabelsByUnit(YearUnit) {
-		ltm := models.NewLearningTransition(l, 0)
+		ltm := models.NewLearningTransition(l, null.NewInt(0, true))
 		for _, y := range yearLearningTransition {
 			if l == y.Label {
 				ltm.Time = y.Time
@@ -140,7 +141,7 @@ func (lt *LearningTimeAggregateService) AggregateLearningTransition(userID int) 
 	// 月ごとの集計
 	months := models.LearningTransitionSlice{}
 	for _, l := range createLabelsByUnit(MonthUnit) {
-		ltm := models.NewLearningTransition(l, 0)
+		ltm := models.NewLearningTransition(l, null.NewInt(0, true))
 		for _, m := range monthLearningTransition {
 			if l == m.Label {
 				ltm.Time = m.Time
@@ -153,7 +154,7 @@ func (lt *LearningTimeAggregateService) AggregateLearningTransition(userID int) 
 	// 週ごとの集計
 	days := models.LearningTransitionSlice{}
 	for _, l := range createLabelsByUnit(DaysUnit) {
-		ltm := models.NewLearningTransition(l, 0)
+		ltm := models.NewLearningTransition(l, null.NewInt(0, true))
 		for _, d := range daysLearningTransition {
 			if l == d.Label {
 				ltm.Time = d.Time
